@@ -7,7 +7,7 @@ import (
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgxutil"
 
-	log "github.com/Yarikf01/graduatedwork/services/utils"
+	log "github.com/Yarikf01/graduatedwork/api/utils"
 )
 
 type txContextKeyType struct{}

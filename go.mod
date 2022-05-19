@@ -26,8 +26,8 @@ require (
 	github.com/robfig/cron v1.2.0
 	github.com/slack-go/slack v0.10.3
 	github.com/stretchr/testify v1.7.1
-	go.opencensus.io v0.22.4
-	go.opentelemetry.io/otel v0.20.0
-	go.opentelemetry.io/otel/sdk v0.20.0
+	go.opencensus.io v0.23.0
+	go.opentelemetry.io/otel v1.3.0
+	go.opentelemetry.io/otel/sdk v1.3.0
 	go.uber.org/zap v1.21.0
 )

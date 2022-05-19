@@ -11,7 +11,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 
-	log "github.com/Yarikf01/graduatedwork/services/utils"
+	log "github.com/Yarikf01/graduatedwork/api/utils"
 )
 
 func (db *DB) Migrate(ctx context.Context, path string) error {

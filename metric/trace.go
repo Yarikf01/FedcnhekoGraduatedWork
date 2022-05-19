@@ -9,7 +9,7 @@ import (
 	"go.opencensus.io/tag"
 	"go.opentelemetry.io/otel"
 
-	"github.com/Yarikf01/graduatedwork/services/utils"
+	"github.com/Yarikf01/graduatedwork/api/utils"
 )
 
 const (

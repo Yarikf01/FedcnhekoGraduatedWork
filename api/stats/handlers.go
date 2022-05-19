@@ -5,7 +5,7 @@ import (
 
 	"github.com/labstack/echo"
 
-	"github.com/Yarikf01/graduatedwork/services/utils"
+	log "github.com/Yarikf01/graduatedwork/api/utils"
 )
 
 func Assemble(root *echo.Group, m Manager) {

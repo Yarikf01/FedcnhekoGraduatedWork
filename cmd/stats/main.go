@@ -10,13 +10,12 @@ import (
 	em "github.com/labstack/echo/middleware"
 	"github.com/robfig/cron"
 
+	"github.com/Yarikf01/graduatedwork/api/repo"
+	"github.com/Yarikf01/graduatedwork/api/stats"
+	log "github.com/Yarikf01/graduatedwork/api/utils"
+	"github.com/Yarikf01/graduatedwork/api/utils/healthcheck"
 	"github.com/Yarikf01/graduatedwork/job"
 	"github.com/Yarikf01/graduatedwork/metric/business"
-	"github.com/Yarikf01/graduatedwork/services/admin"
-	"github.com/Yarikf01/graduatedwork/services/admin/stats"
-	"github.com/Yarikf01/graduatedwork/services/repo"
-	"github.com/Yarikf01/graduatedwork/services/utils"
-	"github.com/Yarikf01/graduatedwork/services/utils/healthcheck"
 )
 
 const maxDBConn = 2
@@ -45,12 +44,12 @@ func main() {
 	if err != nil {
 		log.WithError(logger, err).Fatal("failed to init database")
 	}
-	
+
 	// start web server
 	e := echo.New()
 	e.Use(em.Recover())
 
-	root := e.Group(admin.Prefix)
+	root := e.Group(stats.Prefix)
 
 	// pprof endpoints
 	e.GET("/debug/pprof/*", echo.WrapHandler(http.DefaultServeMux))

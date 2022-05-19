@@ -4,8 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/Yarikf01/graduatedwork/services/utils"
 	"github.com/stretchr/testify/assert"
+
+	log "github.com/Yarikf01/graduatedwork/api/utils"
 )
 
 func TestLogWithContext(t *testing.T) {

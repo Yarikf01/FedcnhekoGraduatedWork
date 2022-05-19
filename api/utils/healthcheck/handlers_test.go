@@ -8,7 +8,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/Yarikf01/graduatedwork/services/utils/healthcheck"
+	"github.com/Yarikf01/graduatedwork/api/utils/healthcheck"
 )
 
 func TestExternalHealthCheck(t *testing.T) {

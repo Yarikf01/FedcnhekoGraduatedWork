@@ -11,51 +11,50 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 
-	"github.com/Yarikf01/graduatedwork/services/admin"
-	"github.com/Yarikf01/graduatedwork/services/admin/stats"
-	"github.com/Yarikf01/graduatedwork/services/admin/stats/statsmocks"
+	"github.com/Yarikf01/graduatedwork/api/stats"
+	"github.com/Yarikf01/graduatedwork/api/stats/statsmocks"
 )
 
 func TestHandlerGetStats(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {
 		subj := prepareTest()
-		expected := admin.DataStat{
-			UsersStat: admin.UsersStat{
+		expected := stats.DataStat{
+			UsersStat: stats.UsersStat{
 				PrivateUserCount: 1,
 				PublicUserCount:  2,
 				ActiveUserCount:  3,
 			},
-			ReviewsStat: admin.ReviewsStat{
+			ReviewsStat: stats.ReviewsStat{
 				PublicReadyPOIReviewCount:      4,
 				PrivateReadyPOIReviewCount:     5,
 				PublicReadyKitchenReviewCount:  6,
 				PrivateReadyKitchenReviewCount: 7,
 				TotalNotReadyReviewCount:       8,
 			},
-			PlacesStat: admin.PlacesStat{
+			PlacesStat: stats.PlacesStat{
 				HereCompletedPlaceCount:         9,
 				HereUncompletedPlaceCount:       10,
 				FoursquareCompletedPlaceCount:   11,
 				FoursquareUncompletedPlaceCount: 12,
 			},
-			FollowersStat: admin.FollowersStat{
+			FollowersStat: stats.FollowersStat{
 				PendingActiveFollowersCount:  13,
 				AcceptedActiveFollowersCount: 14,
 				PendingFollowingCount:        15,
 				AcceptedFollowingCount:       16,
 			},
-			ComplaintsStat: admin.ComplaintsStat{
+			ComplaintsStat: stats.ComplaintsStat{
 				UserComplaintCount:   17,
 				ReviewComplaintCount: 18,
 			},
 		}
 		subj.manager.On("GetStats", mock.Anything).Return(expected, nil)
-		subj.req.GET("/admin/v1/stats").
+		subj.req.GET("/stats/v1/stats").
 			SetDebug(true).
 			Run(subj.ech, func(resp gofight.HTTPResponse, req gofight.HTTPRequest) {
 				assert.Equal(t, http.StatusOK, resp.Code)
 
-				var actual admin.DataStat
+				var actual stats.DataStat
 				err := json.Unmarshal(resp.Body.Bytes(), &actual)
 				assert.NoError(t, err)
 
@@ -66,8 +65,8 @@ func TestHandlerGetStats(t *testing.T) {
 	t.Run("manager failed", func(t *testing.T) {
 		subj := prepareTest()
 
-		subj.manager.On("GetStats", mock.Anything).Return(admin.DataStat{}, fmt.Errorf(""))
-		subj.req.GET("/admin/v1/stats").
+		subj.manager.On("GetStats", mock.Anything).Return(stats.DataStat{}, fmt.Errorf(""))
+		subj.req.GET("/stats/v1/stats").
 			SetDebug(true).
 			Run(subj.ech, func(resp gofight.HTTPResponse, req gofight.HTTPRequest) {
 				assert.Equal(t, http.StatusConflict, resp.Code)
@@ -87,7 +86,7 @@ func prepareTest() *mocks {
 	ech := echo.New()
 	manager := &statsmocks.Manager{}
 
-	stats.Assemble(ech.Group(admin.Prefix), manager)
+	stats.Assemble(ech.Group(stats.Prefix), manager)
 
 	return &mocks{
 		req:     req,

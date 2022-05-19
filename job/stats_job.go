@@ -3,85 +3,84 @@ package job
 import (
 	"context"
 
+	"github.com/Yarikf01/graduatedwork/api/stats"
+	"github.com/Yarikf01/graduatedwork/api/utils"
 	"github.com/Yarikf01/graduatedwork/metric"
 	"github.com/Yarikf01/graduatedwork/metric/business"
-	"github.com/Yarikf01/graduatedwork/services/admin"
-	"github.com/Yarikf01/graduatedwork/services/admin/stats"
-	"github.com/Yarikf01/graduatedwork/services/utils"
 )
 
-var extractors = []func(admin.DataStat) (map[string]string, map[string]interface{}){
+var extractors = []func(stats.DataStat) (map[string]string, map[string]interface{}){
 	//users
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "user_account", "visibility": "public"}, map[string]interface{}{"count": data.PublicUserCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "user_account", "visibility": "private"}, map[string]interface{}{"count": data.PrivateUserCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "user_account", "type": "active"}, map[string]interface{}{"count": data.ActiveUserCount}
 	},
 	//reviews
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "review", "type": "poi", "visibility": "public", "status": "ready"}, map[string]interface{}{"count": data.PublicReadyPOIReviewCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "review", "type": "poi", "visibility": "private", "status": "ready"}, map[string]interface{}{"count": data.PrivateReadyPOIReviewCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "review", "type": "kitchen", "visibility": "public", "status": "ready"}, map[string]interface{}{"count": data.PublicReadyKitchenReviewCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "review", "type": "kitchen", "visibility": "private", "status": "ready"}, map[string]interface{}{"count": data.PrivateReadyKitchenReviewCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "review", "status": "not_ready"}, map[string]interface{}{"count": data.TotalNotReadyReviewCount}
 	},
 	//places
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "place", "status": "completed", "provider": "foursquare"}, map[string]interface{}{"count": data.FoursquareCompletedPlaceCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "place", "status": "uncompleted", "provider": "foursquare"}, map[string]interface{}{"count": data.FoursquareUncompletedPlaceCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "place", "status": "completed", "provider": "here"}, map[string]interface{}{"count": data.HereCompletedPlaceCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "place", "status": "uncompleted", "provider": "here"}, map[string]interface{}{"count": data.HereUncompletedPlaceCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "place_with_review"}, map[string]interface{}{"count": data.PlaceWithReviewCount}
 	},
 	//followers
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "active_followers", "status": "pending"}, map[string]interface{}{"count": data.PendingActiveFollowersCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "active_followers", "status": "accepted"}, map[string]interface{}{"count": data.AcceptedActiveFollowersCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "followings", "status": "pending"}, map[string]interface{}{"count": data.PendingFollowingCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "followings", "status": "accepted"}, map[string]interface{}{"count": data.AcceptedFollowingCount}
 	},
 	//complaints
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "complaint", "type": "user"}, map[string]interface{}{"count": data.UserComplaintCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "complaint", "type": "review"}, map[string]interface{}{"count": data.ReviewComplaintCount}
 	},
 	//media
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "photos"}, map[string]interface{}{"count": data.TotalPhotosCount}
 	},
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "videos"}, map[string]interface{}{"count": data.TotalVideosCount}
 	},
 	//likes
-	func(data admin.DataStat) (map[string]string, map[string]interface{}) {
+	func(data stats.DataStat) (map[string]string, map[string]interface{}) {
 		return map[string]string{"unit": "likes"}, map[string]interface{}{"count": data.TotalLikesCount}
 	},
 }
@@ -104,7 +103,7 @@ func GetStatsJob(ctx context.Context, statsManager stats.Manager, writer busines
 	}
 }
 
-func send2GCP(ctx context.Context, data admin.DataStat) {
+func send2GCP(ctx context.Context, data stats.DataStat) {
 	//users
 	metric.RecordSumMetric(ctx, "recon_stats_user_account_public_count", data.PublicUserCount)
 	metric.RecordSumMetric(ctx, "recon_stats_user_account_private_count", data.PrivateUserCount)

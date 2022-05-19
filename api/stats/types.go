@@ -1,4 +1,4 @@
-package admin
+package stats
 
 type CodesStat struct {
 	TotalCodes     int `json:"total_codes"`
@@ -61,4 +61,15 @@ type DataStat struct {
 	LikesStat
 	PhotosStat
 	VideosStat
+}
+
+type UserInfoView struct {
+	Name         string
+	Created      string
+	AccountType  string
+	Email        string
+	Phone        string
+	Bio          string
+	Nick         string
+	Avatar       string
 }

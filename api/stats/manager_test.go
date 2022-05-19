@@ -7,9 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 
-	"github.com/Yarikf01/graduatedwork/services/admin"
-	"github.com/Yarikf01/graduatedwork/services/admin/stats"
-	"github.com/Yarikf01/graduatedwork/services/repo/repomocks"
+	"github.com/Yarikf01/graduatedwork/api/repo/repomocks"
+	"github.com/Yarikf01/graduatedwork/api/stats"
 )
 
 func TestManagerGetStats(t *testing.T) {
@@ -18,43 +17,43 @@ func TestManagerGetStats(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {
 		subj, m := managerWithMocks()
 
-		expectedStats := admin.DataStat{
-			UsersStat: admin.UsersStat{
+		expectedStats := stats.DataStat{
+			UsersStat: stats.UsersStat{
 				PrivateUserCount: 1,
 				PublicUserCount:  2,
 				ActiveUserCount:  3,
 			},
-			ReviewsStat: admin.ReviewsStat{
+			ReviewsStat: stats.ReviewsStat{
 				PublicReadyPOIReviewCount:      4,
 				PrivateReadyPOIReviewCount:     5,
 				PublicReadyKitchenReviewCount:  6,
 				PrivateReadyKitchenReviewCount: 7,
 				TotalNotReadyReviewCount:       8,
 			},
-			PlacesStat: admin.PlacesStat{
+			PlacesStat: stats.PlacesStat{
 				HereCompletedPlaceCount:         9,
 				HereUncompletedPlaceCount:       10,
 				FoursquareCompletedPlaceCount:   11,
 				FoursquareUncompletedPlaceCount: 12,
 				PlaceWithReviewCount:            33,
 			},
-			FollowersStat: admin.FollowersStat{
+			FollowersStat: stats.FollowersStat{
 				PendingActiveFollowersCount:  13,
 				AcceptedActiveFollowersCount: 14,
 				PendingFollowingCount:        15,
 				AcceptedFollowingCount:       16,
 			},
-			ComplaintsStat: admin.ComplaintsStat{
+			ComplaintsStat: stats.ComplaintsStat{
 				UserComplaintCount:   17,
 				ReviewComplaintCount: 18,
 			},
-			PhotosStat: admin.PhotosStat{
+			PhotosStat: stats.PhotosStat{
 				TotalPhotosCount: 21,
 			},
-			VideosStat: admin.VideosStat{
+			VideosStat: stats.VideosStat{
 				TotalVideosCount: 5,
 			},
-			LikesStat: admin.LikesStat{
+			LikesStat: stats.LikesStat{
 				TotalLikesCount: 12,
 			},
 		}

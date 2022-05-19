@@ -12,7 +12,7 @@ import (
 	"github.com/ory/dockertest"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/Yarikf01/graduatedwork/services/repo"
+	"github.com/Yarikf01/graduatedwork/api/repo"
 )
 
 var (

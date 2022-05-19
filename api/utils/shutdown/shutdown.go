@@ -9,7 +9,7 @@ import (
 
 	"github.com/labstack/echo"
 
-	"github.com/Yarikf01/graduatedwork/services/utils"
+	"github.com/Yarikf01/graduatedwork/api/utils"
 )
 
 func Graceful(ctx context.Context, e *echo.Echo, cleanup func()) {

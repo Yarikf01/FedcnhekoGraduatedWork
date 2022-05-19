@@ -13,7 +13,7 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/jackc/pgxutil"
 
-	"github.com/Yarikf01/graduatedwork/services/utils"
+	log "github.com/Yarikf01/graduatedwork/api/utils"
 )
 
 const (
