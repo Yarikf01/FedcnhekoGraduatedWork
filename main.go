@@ -7,10 +7,10 @@ import (
 	"github.com/labstack/echo"
 	em "github.com/labstack/echo/middleware"
 
-	"github.com/Yarikf01/graduatedwork/api"
-	"github.com/Yarikf01/graduatedwork/config"
-	"github.com/Yarikf01/graduatedwork/utils/healthcheck"
-	"github.com/Yarikf01/graduatedwork/utils/log"
+	"github.com/Yarikf01/bbwy/api"
+	"github.com/Yarikf01/bbwy/config"
+	"github.com/Yarikf01/bbwy/utils/healthcheck"
+	"github.com/Yarikf01/bbwy/utils/log"
 )
 
 func main() {

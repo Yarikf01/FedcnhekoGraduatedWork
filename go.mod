@@ -1,4 +1,4 @@
-module github.com/Yarikf01/graduatedwork
+module github.com/Yarikf01/bbwy
 
 go 1.16
 
